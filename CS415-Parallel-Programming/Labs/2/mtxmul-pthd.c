@@ -47,7 +47,6 @@ void slave(void* param) {
   }
 
   c[data->i][data->j] = sum;
-
   pthread_exit(0);
 }
 
@@ -62,11 +61,15 @@ int main(int argc, char **argv) {
   // create the threads
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
-	struct v* param = (struct v*)malloc(sizeof(struct v));
-	param->i = i;
-	param->j = j;
-        pthread_create(&thread[k++], NULL, (void*)slave, (void*)param);
-	pthread_join(thread[k], NULL);
+		struct v* param = (struct v*)malloc(sizeof(struct v));
+		param->i = i;
+		param->j = j;
+    
+		// strat a thread
+		pthread_t tid;
+		pthread_attr_init(&attr); // set thread attributes
+		pthread_create(&tid, &attr, (void*)slave, (void*)param); // create the thread
+		pthread_join(tid, NULL); // wait for the thread to finish
     }
   }
 
