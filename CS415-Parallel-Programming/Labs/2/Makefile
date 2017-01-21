@@ -1,4 +1,4 @@
-# Makefile for CS 415P/515 Lab 1 (J. Li)
+# Makefile for CS 415P/515 Lab 2 (J. Li)
 #
 condvar:
 	gcc -pthread -g -o condvar condvar-pthd.c
@@ -16,4 +16,4 @@ mtx-p:
 	gcc -pthread -g -o mtx-p mtxmul-pthd.c
 
 clean:
-	rm condvar race race-nolock mtx
+	rm condvar race race-nolock mtx mtx-p

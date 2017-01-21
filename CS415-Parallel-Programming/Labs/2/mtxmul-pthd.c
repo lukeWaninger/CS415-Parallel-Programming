@@ -13,6 +13,7 @@
 
 #define N 16
 int idx = 0;
+int numThreads = 4;
 int a[N][N], b[N][N], c[N][N];
 struct v {
   int i;
@@ -51,27 +52,36 @@ void slave(void* param) {
 }
 
 int main(int argc, char **argv) {
-  init_array();
-
-  pthread_t thread[N];
-  int nprocs = sysconf(_SC_NPROCESSORS_ONLN);
-  cpu_set_t cpuset;
-  int cid, k = 0;
-
-  // create the threads
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-		struct v* param = (struct v*)malloc(sizeof(struct v));
-		param->i = i;
-		param->j = j;
-    
-		// strat a thread
-		pthread_t tid;
-		pthread_attr_init(&attr); // set thread attributes
-		pthread_create(&tid, &attr, (void*)slave, (void*)param); // create the thread
-		pthread_join(tid, NULL); // wait for the thread to finish
+  if (argc > 2) {
+    if ((numThreads = atoi(argv[2])) < 1) {
+    	printf("<numThreads> must be greater than 0");
     }
   }
+  init_array();
 
+  pthread_t thread[numThreads];
+  int nprocs = sysconf(_SC_NPROCESSORS_ONLN);
+  cpu_set_t cpuset;
+  
+  if (numThreads > N) numThreads = N;
+
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N;) {
+      struct v* param = (struct v*)malloc(sizeof(struct v));
+      param->i = i;
+      
+      // create threads and pass parameters
+      for (long k = 0; k < numThreads; k++) { 
+	param->j = j;
+	pthread_attr_t attr;       // set of thread attributes
+	pthread_attr_init(&attr);  // give them defaults
+        pthread_create(&thread[k], &attr, (void*)slave, (void*)param);
+	pthread_join(thread[k], NULL);
+	j++;
+      }
+      free(param);
+    }
+  }
+  
   print_array();
 }
