@@ -22,7 +22,7 @@ void worker(long tid) {
   
 #ifdef DEBUG
   // print the worker id and work range
-  printf("id %d; low %d; high %d\n", tid, low, high);
+  printf("id %zu; low %d; high %d\n", tid, low, high);
 #endif
 
   for (i = low; i < high; i++)

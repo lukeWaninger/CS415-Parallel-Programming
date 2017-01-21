@@ -10,3 +10,7 @@ proc compute(i: int): int {
 }
 sum = + reduce [i in D] (compute(i));
 writeln("The result sum is " + sum);
+
+for i in LocaleSpace do
+	writeln("local ", i, "; id ", Locales[i].id);
+  

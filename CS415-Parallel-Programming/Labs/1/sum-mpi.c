@@ -19,6 +19,10 @@ int main(int argc, char **argv) {
   MPI_Init(&argc, &argv);  
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);  
   MPI_Comm_size(MPI_COMM_WORLD, &size);  
+ 
+#ifdef DEBUG
+  printf("rank %d; size %d\n", rank, size);
+#endif
   
   low = (N/size) * rank;    /* a simplistic partition scheme */ 
   high = low + (N/size);	
