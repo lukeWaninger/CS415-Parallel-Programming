@@ -5,6 +5,7 @@
 
 // Matrix multiplication algorithm.  
 //
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -15,7 +16,9 @@
 int idx = 0;
 int numThreads = 4;
 int a[N][N], b[N][N], c[N][N];
+
 struct v {
+  long tid;
   int i;
   int j;
 };
@@ -41,8 +44,9 @@ void print_array()  {
 
 void slave(void* param) {
   struct v* data = param;
-  int n, sum = 0;
-
+  printf("Thread %ld started on %d\n", data->tid, sched_getcpu()); 
+   
+  int n, sum = 0; // is this sum in shared memory space
   for (n = 0; n < N; ++n) {
     sum += a[data->i][n] * b[n][data->j]; 
   }
@@ -57,31 +61,38 @@ int main(int argc, char **argv) {
     	printf("<numThreads> must be greater than 0");
     }
   }
-  init_array();
+  init_array(N);
 
+  if (numThreads > N) numThreads = N;
   pthread_t thread[numThreads];
   int nprocs = sysconf(_SC_NPROCESSORS_ONLN);
   cpu_set_t cpuset;
-  
-  if (numThreads > N) numThreads = N;
+  int cid = 0;
 
+  int k = numThreads - 1;
   for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N;) {
+    for (int j = 0; j < N; j++) {
       struct v* param = (struct v*)malloc(sizeof(struct v));
       param->i = i;
+      param->j = j;
+
+      // setup a new thread
+      pthread_create(&thread[k], NULL, (void*)slave, (void*)param);
+      CPU_ZERO(&cpuset);
+      CPU_SET(cid++ % nprocs, &cpuset);
+      pthread_setaffinity_np(thread[k], sizeof(cpu_set_t), &cpuset);
       
-      // create threads and pass parameters
-      for (long k = 0; k < numThreads; k++) { 
-	param->j = j;
-	pthread_attr_t attr;       // set of thread attributes
-	pthread_attr_init(&attr);  // give them defaults
-        pthread_create(&thread[k], &attr, (void*)slave, (void*)param);
-	pthread_join(thread[k], NULL);
-	j++;
+      k--;
+      if (k == 0) {
+	for (k; k < numThreads; k++) {
+	  pthread_join(thread[k], NULL);
+	}
       }
-      free(param);
     }
   }
-  
+
+  for (k = 0; k < numThreads; k++) {
+    pthread_join(thread[k], NULL);
+  }
   print_array();
 }

@@ -17,7 +17,6 @@ void sender() {
   sleep(1);
 
   pthread_cond_signal(&cond);
-
 }
 
 void receiver() {
