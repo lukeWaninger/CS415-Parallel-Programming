@@ -56,10 +56,11 @@ void slave(void* param) {
 }
 
 int main(int argc, char **argv) {
-  if (argc > 2) {
-    if ((numThreads = atoi(argv[2])) < 1) {
-    	printf("<numThreads> must be greater than 0");
+  if (argc > 1) {
+    if ((numThreads = atoi(argv[1])) < 1) {
+      printf("<numThreads> must be greater than 0");
     }
+    printf("Threads to start: %d\n", numThreads);
   }
   init_array(N);
 
@@ -73,8 +74,9 @@ int main(int argc, char **argv) {
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
       struct v* param = (struct v*)malloc(sizeof(struct v));
-      param->i = i;
-      param->j = j;
+      param->tid = k;
+      param->i   = i;
+      param->j   = j;
 
       // setup a new thread
       pthread_create(&thread[k], NULL, (void*)slave, (void*)param);
@@ -83,16 +85,13 @@ int main(int argc, char **argv) {
       pthread_setaffinity_np(thread[k], sizeof(cpu_set_t), &cpuset);
       
       k--;
-      if (k == 0) {
-	for (k; k < numThreads; k++) {
+      if (k == -1) {
+	  for (k = numThreads - 1; k >= 0; k--) {
 	  pthread_join(thread[k], NULL);
 	}
+	k = numThreads - 1;
       }
     }
-  }
-
-  for (k = 0; k < numThreads; k++) {
-    pthread_join(thread[k], NULL);
   }
   print_array();
 }

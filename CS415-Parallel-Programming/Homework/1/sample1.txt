@@ -1,0 +1,142 @@
+
+.prodcons-pthd
+Main: started ...
+Usage: ./prodcons-pthd <numConsumers>
+
+.prodcons-pthd 0
+Main: started ...
+<numConsumers> must be greater than 0
+
+.prodcons-pthd 1
+Main: started ...
+Consumer[0] starting on core 7
+Producer starting on core 3
+Producer ending
+Consumer[0] ending
+Main: ... all threads have joined!
+Task count across threads:
+C[ 0]:100, 
+Total: 100
+
+.prodcons-pthd 2
+Main: started ...
+Producer starting on core 0
+Consumer[0] starting on core 5
+Consumer[1] starting on core 5
+Producer ending
+Consumer[1] ending
+Consumer[0] ending
+Main: ... all threads have joined!
+Task count across threads:
+C[ 0]:45, C[ 1]:55, 
+Total: 100
+
+.prodcons-pthd 8
+Main: started ...
+Consumer[2] starting on core 5
+Consumer[3] starting on core 5
+Consumer[0] starting on core 5
+Consumer[1] starting on core 5
+Consumer[4] starting on core 5
+Consumer[5] starting on core 5
+Consumer[6] starting on core 5
+Producer starting on core 3
+Consumer[7] starting on core 5
+Producer ending
+Consumer[7] ending
+Consumer[3] ending
+Consumer[0] ending
+Consumer[2] ending
+Consumer[1] ending
+Consumer[4] ending
+Consumer[5] ending
+Consumer[6] ending
+Main: ... all threads have joined!
+Task count across threads:
+C[ 0]: 6, C[ 1]:19, C[ 2]: 8, C[ 3]: 7, 
+C[ 4]: 3, C[ 5]:29, C[ 6]:22, C[ 7]: 6, 
+
+Total: 100
+
+.prodcons-pthd 13
+Main: started ...
+Consumer[1] starting on core 1
+Consumer[0] starting on core 1
+Consumer[2] starting on core 1
+Consumer[3] starting on core 1
+Consumer[4] starting on core 1
+Consumer[5] starting on core 1
+Consumer[6] starting on core 1
+Consumer[7] starting on core 1
+Consumer[8] starting on core 1
+Consumer[9] starting on core 1
+Consumer[10] starting on core 1
+Consumer[11] starting on core 1
+Producer starting on core 5
+Consumer[12] starting on core 1
+Consumer[7] ending
+Consumer[2] ending
+Consumer[11] ending
+Consumer[6] ending
+Consumer[5] ending
+Producer ending
+Consumer[0] ending
+Consumer[12] ending
+Consumer[10] ending
+Consumer[8] ending
+Consumer[1] ending
+Consumer[9] ending
+Consumer[4] ending
+Consumer[3] ending
+Main: ... all threads have joined!
+Task count across threads:
+C[ 0]: 9, C[ 1]: 6, C[ 2]:28, C[ 3]: 6, 
+C[ 4]: 6, C[ 5]: 5, C[ 6]: 3, C[ 7]: 2, 
+C[ 8]:11, C[ 9]:10, C[10]: 4, C[11]: 6, 
+C[12]: 4, 
+Total: 100
+
+.prodcons-pthd 16
+Main: started ...
+Consumer[1] starting on core 3
+Consumer[0] starting on core 3
+Consumer[2] starting on core 3
+Consumer[3] starting on core 3
+Consumer[4] starting on core 3
+Consumer[5] starting on core 3
+Consumer[6] starting on core 3
+Consumer[7] starting on core 3
+Consumer[8] starting on core 3
+Consumer[9] starting on core 3
+Consumer[10] starting on core 3
+Consumer[11] starting on core 3
+Consumer[12] starting on core 3
+Consumer[13] starting on core 3
+Consumer[14] starting on core 3
+Producer starting on core 1
+Consumer[15] starting on core 3
+Consumer[1] ending
+Consumer[5] ending
+Consumer[12] ending
+Consumer[7] ending
+Consumer[11] ending
+Consumer[9] ending
+Consumer[2] ending
+Consumer[13] ending
+Consumer[3] ending
+Consumer[0] ending
+Consumer[15] ending
+Consumer[6] ending
+Producer ending
+Consumer[8] ending
+Consumer[10] ending
+Consumer[4] ending
+Consumer[14] ending
+Main: ... all threads have joined!
+Task count across threads:
+C[ 0]: 3, C[ 1]: 4, C[ 2]: 5, C[ 3]: 7, 
+C[ 4]: 1, C[ 5]: 7, C[ 6]: 5, C[ 7]: 7, 
+C[ 8]:14, C[ 9]: 8, C[10]: 3, C[11]: 8, 
+C[12]: 4, C[13]: 4, C[14]: 8, C[15]:12, 
+
+Total: 100

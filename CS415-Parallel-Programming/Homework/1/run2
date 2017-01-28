@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Script for testing CS415/515 Assignment 1's qsort_pthd program.
+#
+
+
+echo    
+echo .qsort-pthd
+./qsort-pthd
+
+for i in 0 1 2 5 8
+do
+    echo    
+    echo .qsort-pthd 100 $i
+    ./qsort-pthd 100 $i
+done
+
+for i in 1 2 8 16 20
+do
+    echo .qsort-pthd 1500 $i
+    ./qsort-pthd 1500 $i
+done
+
+exit 0

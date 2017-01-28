@@ -1,0 +1,224 @@
+
+.qsort-pthd
+Main: started ...
+Usage : ./qsort-pthd <N> [<numThreads>]
+
+.qsort-pthd 100 0
+Main: started ...
+<numThreads> must be greater than 0
+
+.qsort-pthd 100 1
+Main: started ...
+... quicksorting array of size 100 with 1 threads
+Thread[0] starting on core 7
+Thread[0] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:100, 
+Total: 100
+
+.qsort-pthd 100 2
+Main: started ...
+... quicksorting array of size 100 with 2 threads
+Thread[0] starting on core 4
+Thread[0] ending
+Thread[1] starting on core 1
+Thread[1] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:100, T[ 1]:0  , 
+Total: 100
+
+.qsort-pthd 100 5
+Main: started ...
+... quicksorting array of size 100 with 5 threads
+Thread[2] starting on core 5
+Thread[1] starting on core 0
+Thread[3] starting on core 0
+Thread[0] starting on core 1
+Thread[4] starting on core 0
+Thread[4] ending
+Thread[1] ending
+Thread[0] ending
+Thread[2] ending
+Thread[3] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:0  , T[ 1]:0  , T[ 2]:79 , T[ 3]:0  , 
+T[ 4]:21 , 
+Total: 100
+
+.qsort-pthd 100 8
+Main: started ...
+... quicksorting array of size 100 with 8 threads
+Thread[2] starting on core 5
+Thread[1] starting on core 0
+Thread[3] starting on core 5
+Thread[4] starting on core 5
+Thread[5] starting on core 5
+Thread[6] starting on core 5
+Thread[0] starting on core 1
+Thread[7] starting on core 5
+Thread[5] ending
+Thread[4] ending
+Thread[2] ending
+Thread[1] ending
+Thread[6] ending
+Thread[3] ending
+Thread[0] ending
+Thread[7] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:0  , T[ 1]:0  , T[ 2]:78 , T[ 3]:0  , 
+T[ 4]:0  , T[ 5]:22 , T[ 6]:0  , T[ 7]:0  , 
+
+Total: 100
+.qsort-pthd 1500 1
+Main: started ...
+... quicksorting array of size 1500 with 1 threads
+Thread[0] starting on core 3
+Thread[0] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:1500, 
+Total: 1500
+.qsort-pthd 1500 2
+Main: started ...
+... quicksorting array of size 1500 with 2 threads
+Thread[0] starting on core 3
+Thread[1] starting on core 5
+Thread[0] ending
+Thread[1] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:742, T[ 1]:758, 
+Total: 1500
+.qsort-pthd 1500 8
+Main: started ...
+... quicksorting array of size 1500 with 8 threads
+Thread[1] starting on core 6
+Thread[0] starting on core 5
+Thread[1] ending
+Thread[0] ending
+Thread[2] starting on core 6
+Thread[2] ending
+Thread[3] starting on core 6
+Thread[3] ending
+Thread[4] starting on core 6
+Thread[4] ending
+Thread[5] starting on core 6
+Thread[5] ending
+Thread[6] starting on core 6
+Thread[6] ending
+Thread[7] starting on core 6
+Thread[7] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:819, T[ 1]:681, T[ 2]:0  , T[ 3]:0  , 
+T[ 4]:0  , T[ 5]:0  , T[ 6]:0  , T[ 7]:0  , 
+
+Total: 1500
+.qsort-pthd 1500 16
+Main: started ...
+... quicksorting array of size 1500 with 16 threads
+Thread[1] starting on core 5
+Thread[2] starting on core 5
+Thread[3] starting on core 5
+Thread[4] starting on core 5
+Thread[5] starting on core 5
+Thread[6] starting on core 5
+Thread[7] starting on core 5
+Thread[8] starting on core 5
+Thread[9] starting on core 5
+Thread[10] starting on core 5
+Thread[0] starting on core 6
+Thread[11] starting on core 5
+Thread[12] starting on core 5
+Thread[13] starting on core 5
+Thread[14] starting on core 5
+Thread[15] starting on core 5
+Thread[15] ending
+Thread[10] ending
+Thread[2] ending
+Thread[9] ending
+Thread[4] ending
+Thread[5] ending
+Thread[1] ending
+Thread[8] ending
+Thread[13] ending
+Thread[7] ending
+Thread[6] ending
+Thread[3] ending
+Thread[11] ending
+Thread[12] ending
+Thread[0] ending
+Thread[14] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:52 , T[ 1]:427, T[ 2]:257, T[ 3]:0  , 
+T[ 4]:0  , T[ 5]:0  , T[ 6]:0  , T[ 7]:0  , 
+T[ 8]:0  , T[ 9]:265, T[10]:382, T[11]:107, 
+T[12]:0  , T[13]:10 , T[14]:0  , T[15]:0  , 
+
+Total: 1500
+.qsort-pthd 1500 20
+Main: started ...
+... quicksorting array of size 1500 with 20 threads
+Thread[1] starting on core 5
+Thread[6] starting on core 2
+Thread[5] starting on core 2
+Thread[4] starting on core 2
+Thread[3] starting on core 2
+Thread[2] starting on core 2
+Thread[7] starting on core 2
+Thread[8] starting on core 2
+Thread[9] starting on core 1
+Thread[10] starting on core 1
+Thread[11] starting on core 5
+Thread[12] starting on core 5
+Thread[13] starting on core 1
+Thread[14] starting on core 1
+Thread[16] starting on core 1
+Thread[15] starting on core 5
+Thread[17] starting on core 5
+Thread[18] starting on core 5
+Thread[0] starting on core 3
+Thread[19] starting on core 5
+Thread[14] ending
+Thread[15] ending
+Thread[1] ending
+Thread[17] ending
+Thread[6] ending
+Thread[5] ending
+Thread[2] ending
+Thread[18] ending
+Thread[4] ending
+Thread[8] ending
+Thread[3] ending
+Thread[0] ending
+Thread[11] ending
+Thread[12] ending
+Thread[10] ending
+Thread[7] ending
+Thread[19] ending
+Thread[16] ending
+Thread[9] ending
+Thread[13] ending
+Main: ... all threads have joined!
+Main: ... sorting result verified!
+Workload count across threads:
+T[ 0]:0  , T[ 1]:93 , T[ 2]:113, T[ 3]:126, 
+T[ 4]:131, T[ 5]:122, T[ 6]:282, T[ 7]:11 , 
+T[ 8]:129, T[ 9]:133, T[10]:182, T[11]:2  , 
+T[12]:68 , T[13]:29 , T[14]:12 , T[15]:18 , 
+T[16]:16 , T[17]:33 , T[18]:0  , T[19]:0  , 
+
+Total: 1500
