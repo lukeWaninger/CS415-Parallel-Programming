@@ -4,6 +4,7 @@
 //------------------------------------------------------------------------- 
 
 // Producer Consumer Program using Pthreads
+// Luke Waninger
 //
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -53,7 +54,8 @@ int main(int argc, char **argv) {
   for (long k = 0; k < numConsumers; k++)
     pthread_create(&threads[k], NULL, (void*)consumer, (void*)k);
 
-  // execute the producer code
+  // execute the producer code leaving time for the consumers to start
+  // sleep(1);
   producer();
 
   // wait for consumer threads to terminate
