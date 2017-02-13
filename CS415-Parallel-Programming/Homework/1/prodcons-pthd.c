@@ -1,167 +1,126 @@
-//------------------------------------------------------------------------- 
-// This is supporting software for CS415/515 Parallel Programming.
-// Copyright (c) Portland State University
-//------------------------------------------------------------------------- 
-
-// Producer Consumer Program using Pthreads
-// Luke Waninger
-//
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <sched.h>
-#include <unistd.h>
 #include "task-queue.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <pthread.h>
+#include <semaphore.h>
 
-// default values
-int numConsumers = 1;               // default number of consumers
-int queue_cap    = 20;              // the maximum task buffer size
-int num_tasks    = 100;             // number of tasks to complete
-queue_t *queue;                     // the queue
-pthread_mutex_t buffer;             // lock the queue (task buffer)
-pthread_cond_t cond_task_available; // for signalling a task is available
-pthread_cond_t cond_free_available; // for signalling a position is open
+pthread_mutex_t mutex;
+pthread_cond_t cond_produce, cond_consume;
 
-// a counting variable with a lock to maintain synchronization
-struct count {
-  pthread_mutex_t mutex;
-  int num;
-};
-struct count free_count;           // keep track of the free count
-struct count task_count;           // keep track of the task count
+int total_tasks = 100;
+int last_task = 0;
+int task_count=1; 
+const int max_queue = 20;
+const int Q_count =1;
+queue_t* task_Q;
 
-// function declarations
-void consumer(void*);
-void producer(void);
-static void p_add_task(task_t*);         // just for reuse
-static void c_init(struct count*, int);  // to initialize the counting struct
-static void c_up(struct count*);         // to increase a count
-static void c_down(struct count*);       // to decrease a count
+void producer()
+{
 
-int main(int argc, char **argv) {
-  // check for input and change default consumer count if necessary
-  if (argc > 1) {
-    if ((numConsumers = atoi(argv[1])) < 1) {
-      printf("<numCons> must be greater than 0\n");      
-    }
-  }
- 
-  // initialize the producer consumer queue
-  queue = init_queue(queue_cap);
+	while(total_tasks != 0)		//continue to produce tasks until 100 habe 
+	{
+		printf("thread number %d \n",task_count);
+		
+		pthread_mutex_lock(&mutex);
 
-  // initialize the locks
-  pthread_mutex_init(&buffer, NULL);
- 
-  // initialize the free and task counts
-  c_init(&free_count, queue_cap);
-  c_init(&task_count, 0);
+		if(task_Q -> length == max_queue)
+			pthread_cond_wait(&cond_consume,&mutex);
+		
+		task_t * new_task = create_task(task_count, task_count);
+		
+		add_task(task_Q,new_task);
+		pthread_mutex_unlock(&mutex);
+	
+		pthread_cond_signal(&cond_consume);
+		task_count++;		//increment number of created tasks
+		total_tasks--;		//decrement total task by one with each iteration 
+	}
 
-  // create consumer threads
-  pthread_t *threads = 
-    (pthread_t *) malloc(sizeof(pthread_t) * numConsumers);
-  for (long k = 0; k < numConsumers; k++)
-    pthread_create(&threads[k], NULL, (void*)consumer, (void*)k);
 
-  // execute the producer code leaving time for the consumers to start
-  producer();
-
-  // wait for consumer threads to terminate
-  for (long k = 0; k < numConsumers; k++)
-    pthread_join(threads[k], NULL);
-  
-  exit(0);
 }
 
-void 
-producer(void) {
-  printf("Producer starting on core %d\n", sched_getcpu());
-  int t_num = 1;
-  
-  // keep adding tasks until the limit is reached
-  while(t_num <= num_tasks) {
-    task_t *t = create_task(t_num, t_num); 
-    p_add_task(t);                             
-    ++t_num;                               
-  }
-  
-  // lock, send termination tasks, unlock
-  for (int i = 0; i < numConsumers; i++) {
-    task_t *terminate = create_task(-1, -1);
-    p_add_task(terminate);
-  }
+void consumer()
+{
+
+	while(1)
+	{
+	
+		pthread_mutex_lock(&mutex);
+
+		if(task_Q->length == 0)
+			pthread_cond_wait(&cond_produce,&mutex);
+		
+		task_t * finished =remove_task(task_Q);	
+		pthread_mutex_unlock(&mutex);
+		
+		printf("thread %d consumed\n",finished->high);
+		pthread_cond_signal(&cond_produce);
+		
+		if(finished -> high  == 100){					//if all tasks have been produced and consumer
+			printf("last task reached\n");
+			last_task = 1;
+			return;
+		}
+	
+		if(last_task)
+			return;
+	}
+	
 }
 
-static void
-p_add_task(task_t *t) {
-    // wait for a free space in the buffer
-    pthread_mutex_lock(&free_count.mutex);
-    while(free_count.num == 0)
-      pthread_cond_wait(&cond_free_available, &free_count.mutex);
-    pthread_mutex_unlock(&free_count.mutex);
+int main(int argc, char * argv[])
+{
+	
+	long numConsumers =0;
+	
+	if(argc < 2)		//if no argument provided 
+	{
+		printf("no consumer thread number provided, default to 1 consumer thread\n");
+		numConsumers = 1; 
+	}
 
-    // lock the buffer, add the task, decrease the free count
-    pthread_mutex_lock(&buffer);
-    add_task(queue, t); 
-    c_down(&free_count);
-    pthread_mutex_unlock(&buffer);
-    
-    // increase task count and signal its available
-    c_up(&task_count);
-    pthread_cond_signal(&cond_task_available);
-}
+	else if(argc > 2)	//cannot have more than one argument
+	{
+		printf("Must not have more than two arguments, default to 1 consumer thread\n");
+		numConsumers = 1; 
+	}
 
-void 
-consumer(void *p) {
-  long k = (long)&p;
-  printf("Consumer[%ld] starting on core %d\n", k, sched_getcpu());
+	else			//case of negate values or 0
+	{
+		
+	 	int val =  atol(argv[1]);
 
-  // infinite loop to keep consuming tasks
-  int t_consumed = 0;
-  while (1) {
-    // wait for an available task
-    pthread_mutex_lock(&task_count.mutex);
-    while (task_count.num == 0) {
-      pthread_cond_wait(&cond_task_available, &task_count.mutex);
-    }
-    pthread_mutex_unlock(&task_count.mutex);
+		if(val <=0)
+		{
+			printf("The number of consumers must be greater than 1, default to 1 consumer thread\n");
+			numConsumers =1;
+		}
+		
+		else
+	       		numConsumers = val;
+	}
+	
+	printf("The number of consumer threads is %ld\n",numConsumers);
+	long i;
 
-    // lock the buffer, take a task, decrease the task count
-    pthread_mutex_lock(&buffer);              
-    task_t *task = remove_task(queue);        
-    c_down(&task_count);
-    pthread_mutex_unlock(&buffer);            
 
-    // increase the free count and signal a free position is available
-    c_up(&free_count);
-    pthread_cond_signal(&cond_free_available);
+	task_Q = init_queue(max_queue);						//create task queue passing it max number of tasks (20)
+	pthread_mutex_init(&mutex,NULL);
+	pthread_cond_init(&cond_consume,NULL);
+	pthread_cond_init(&cond_produce,NULL);
 
-    // check for termination task, print number of tasks, terminate
-    if (!task || (task->low == -1 && task->high == -1)) {
-      printf("C[%ld]: %d\n", k, t_consumed);
-      return;
-    }
+	pthread_t *threads = (pthread_t *) malloc(sizeof(pthread_t)* numConsumers);
 
-    ++t_consumed;
-  }
-}
+	for(i =0; i < numConsumers; ++i)
+	{
+		pthread_create(&threads[i],NULL,(void *)consumer, (void*)i);
+	}
 
-static void 
-c_init(struct count* c, int init_num) {
-  pthread_mutex_init(&c->mutex, NULL);
-  c->num = init_num;
-}
+	producer();
+	
+	for(i = 0; i < numConsumers; ++i);
+		pthread_join(threads[i],NULL);
 
-static void 
-c_down(struct count *c) {
-  pthread_mutex_lock(&c->mutex);
-  c->num--;
-  pthread_mutex_unlock(&c->mutex);
-}
 
-static void 
-c_up(struct count *c) {
-  pthread_mutex_lock(&c->mutex);
-  c->num++;
-  pthread_mutex_unlock(&c->mutex);
+	return 0;
 }
