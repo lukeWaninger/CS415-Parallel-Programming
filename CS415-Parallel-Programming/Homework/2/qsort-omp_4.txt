@@ -1,0 +1,26 @@
+Initialized array to a random permutation of [1..50]
+Sorting started ...|t|=4
+Thread 3 found middle [43]
+Thread 2 found middle [8]
+Thread 0 sorted [0, 7]
+Thread 2 found middle [39]
+Thread 0 found middle [26]
+Thread 2 sorted [40, 42]
+Thread 2 found middle [25]
+Thread 1 found middle [37]
+Thread 0 sorted [27, 36]
+Thread 2 found middle [19]
+Thread 3 sorted [44, 49]
+Thread 3 sorted [9, 18]
+Thread 3 sorted [20, 24]
+... completed.
+
+ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 
+11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
+21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 
+31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
+41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 
+
+Result verified!
+
+[ 0]: 3 	[ 1]: 1 	[ 2]: 5 	[ 3]: 4 	

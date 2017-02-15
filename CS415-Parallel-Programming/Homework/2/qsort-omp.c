@@ -14,6 +14,7 @@
 #include <omp.h>
 
 #define MINSIZE   10 		// threshold for switching to bubblesort
+int *stats;
 
 // Swap two array elements 
 //
@@ -60,12 +61,16 @@ void bubblesort(int *array, int low, int high) {
   if (low >= high)
     return;
   int i,j;
-#pragma omp parallel for shared(i,j) collapse(2)
   for (i = low; i <= high; i++)
     for (j = i+1; j <= high; j++) 
-      if (array[i] > array[j])
+      if (array[i] > array[j]) {
         swap(array, i, j);
-  printf("Thread %d sorted [%d, %d]\n", omp_get_thread_num(), low, high);
+      }
+
+  // print 
+  int t_num = omp_get_thread_num();
+  printf("Thread %d sorted [%d, %d]\n", t_num, low, high);
+  stats[t_num]++;
 }      
 
 // Pick an arbitrary element as pivot. Rearrange array 
@@ -75,12 +80,16 @@ void bubblesort(int *array, int low, int high) {
 int partition(int *array, int low, int high) {
   int pivot = array[high]; 	// use highest element as pivot 
   int middle = low;
+  
   for(int i = low; i < high; i++)
     if(array[i] < pivot) {
       swap(array, i, middle);
       middle++;
     }
   swap(array, high, middle);
+ 
+  // print and collect stats
+  stats[omp_get_thread_num()]++;
   return middle;
 }
  
@@ -88,19 +97,17 @@ int partition(int *array, int low, int high) {
 // 
 void quicksort(int *array, int low, int high) {
   if (high - low < MINSIZE) {
-    #pragma omp single
     bubblesort(array, low, high);
     return;
   }
   int middle = partition(array, low, high);
   printf("Thread %d found middle [%d]\n", omp_get_thread_num(), middle);
-  if (low < middle)
-  #pragma omp sections
-  {
-    #pragma omp section
+  #pragma omp task
+  if (low < middle) {
     quicksort(array, low, middle-1);
-  if (middle < high)
-    #pragma omp section
+  }
+  #pragma omp task
+  if (middle < high) {
     quicksort(array, middle+1, high);
   }
 }
@@ -108,7 +115,7 @@ void quicksort(int *array, int low, int high) {
 // Main routine for testing quicksort
 // 
 int main(int argc, char **argv) {
-  int *array, N, num_t;
+  int *array, N, num_t = 1;
   
   // check command line first 
   if (argc < 2) {
@@ -127,10 +134,36 @@ int main(int argc, char **argv) {
   }
   omp_set_num_threads(num_t);
 
-  array = init_array(N);
-  printf("Sorting started ...|t|=%d\n", num_t);
-  quicksort(array, 0, N-1);
-  printf("... completed.\n");
-  verify_array(array, N);
-}
+  // initialize the stats array
+  stats = malloc(sizeof(int) * num_t); 
+  for (int i = 0; i < num_t; ++i)
+    stats[i] = 0;
 
+  array = init_array(N);
+  
+  printf("Sorting started ...|t|=%d\n", num_t);
+#pragma omp parallel shared(array)
+{
+#pragma omp single
+  quicksort(array, 0, N-1);
+}
+printf("... completed.\n\n");
+  
+  // print array to see where the sorting has gone bad
+  for (int i = 0; i < N; ++i) {
+    printf("%2d, ", array[i]);
+    if (i%10==9) printf("\n");
+  }
+  printf("\n");
+
+  verify_array(array, N);
+
+  // print thread stats
+  printf("\n");
+  for (int i = 0; i < num_t; ++i) {
+    printf("[%2d]: %d \t", i, stats[i]);
+    if (i%5==4) printf("\n");
+  }
+  printf("\n");
+  free(stats);
+}

@@ -30,7 +30,7 @@ int main() {
 
   // multiplication
   for (i = 0; i < N; i++) {
-    #pragma omp parallel for private(j)
+    #pragma omp parallel for private(j,k)
     for (j = 0; j < N; j++) {
       int tid = omp_get_thread_num();
       printf("[%d, %d] by thread %d\n", i, j, tid);

@@ -29,14 +29,14 @@ int main() {
   }
 
   // multiplication
-#pragma omp parallel for private(i,j)
+#pragma omp parallel for private(i,j,k)
   for (i = 0; i < N; i++) {
     for (j = 0; j < N; j++) {
       int tid = omp_get_thread_num();
       printf("[%d, %d] by thread %d\n", i, j, tid);
       stats[tid]++;
   	  c[i][j] = 0.;
-  	
+  
       for (k = 0; k < N; k++) {
   	    c[i][j] += a[i][k] * b[k][j];
     	}
