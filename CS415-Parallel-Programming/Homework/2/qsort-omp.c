@@ -144,18 +144,19 @@ int main(int argc, char **argv) {
   printf("Sorting started ...|t|=%d\n", num_t);
 #pragma omp parallel shared(array)
 {
-#pragma omp single
+  #pragma omp single
   quicksort(array, 0, N-1);
 }
 printf("... completed.\n\n");
   
+/*
   // print array to see where the sorting has gone bad
   for (int i = 0; i < N; ++i) {
     printf("%2d, ", array[i]);
     if (i%10==9) printf("\n");
   }
   printf("\n");
-
+*/
   verify_array(array, N);
 
   // print thread stats
