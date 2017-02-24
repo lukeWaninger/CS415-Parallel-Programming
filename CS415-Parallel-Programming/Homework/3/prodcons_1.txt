@@ -1,0 +1,179 @@
+Script started on Thu 23 Feb 2017 06:38:18 PM PST
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ..[K/prodcons1 -nl 4
+producer added {low = 1, high = 1} to queue (idx=1)
+producer added {low = 2, high = 2} to queue (idx=2)
+producer added {low = 3, high = 3} to queue (idx=3)
+producer added {low = 4, high = 4} to queue (idx=4)
+producer added {low = 5, high = 5} to queue (idx=5)
+producer added {low = 6, high = 6} to queue (idx=6)
+producer added {low = 7, high = 7} to queue (idx=7)
+producer added {low = 8, high = 8} to queue (idx=8)
+producer added {low = 9, high = 9} to queue (idx=9)
+producer added {low = 10, high = 10} to queue (idx=0)
+consumer removed {low = 1, high = 1} from queue
+consumer removed {low = 2, high = 2} from queue
+consumer removed {low = 3, high = 3} from queue
+consumer removed {low = 4, high = 4} from queue
+consumer removed {low = 5, high = 5} from queue
+consumer removed {low = 6, high = 6} from queue
+consumer removed {low = 7, high = 7} from queue
+consumer removed {low = 8, high = 8} from queue
+consumer removed {low = 9, high = 9} from queue
+consumer removed {low = 10, high = 10} from queue
+producer added {low = 11, high = 11} to queue (idx=1)
+producer added {low = 12, high = 12} to queue (idx=2)
+producer added {low = 13, high = 13} to queue (idx=3)
+producer added {low = 14, high = 14} to queue (idx=4)
+producer added {low = 15, high = 15} to queue (idx=5)
+producer added {low = 16, high = 16} to queue (idx=6)
+producer added {low = 17, high = 17} to queue (idx=7)
+producer added {low = 18, high = 18} to queue (idx=8)
+producer added {low = 19, high = 19} to queue (idx=9)
+producer added {low = 20, high = 20} to queue (idx=0)
+consumer removed {low = 11, high = 11} from queue
+consumer removed {low = 12, high = 12} from queue
+producer added endFlag to queue (idx=1)
+consumer removed {low = 13, high = 13} from queue
+consumer removed {low = 14, high = 14} from queue
+consumer removed {low = 15, high = 15} from queue
+consumer removed {low = 16, high = 16} from queue
+consumer removed {low = 17, high = 17} from queue
+consumer removed {low = 18, high = 18} from queue
+consumer removed {low = 19, high = 19} from queue
+consumer removed {low = 20, high = 20} from queue
+consumer removed {low = 0, high = 0} from queue
+consumer got endFlag, total tasks = 21
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./prodcons1 -nl 4[K[K[Kl 4 numTA[Kasks=40
+<command-line arg>:3: error: Unexpected flag:  "numTasks=40"
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./prodcons1 -nl 4 numTasks=40[C-numTasks=40-numTasks=40
+producer added {low = 1, high = 1} to queue (idx=1)
+producer added {low = 2, high = 2} to queue (idx=2)
+producer added {low = 3, high = 3} to queue (idx=3)
+producer added {low = 4, high = 4} to queue (idx=4)
+producer added {low = 5, high = 5} to queue (idx=5)
+producer added {low = 6, high = 6} to queue (idx=6)
+producer added {low = 7, high = 7} to queue (idx=7)
+producer added {low = 8, high = 8} to queue (idx=8)
+producer added {low = 9, high = 9} to queue (idx=9)
+producer added {low = 10, high = 10} to queue (idx=0)
+consumer removed {low = 1, high = 1} from queue
+consumer removed {low = 2, high = 2} from queue
+consumer removed {low = 3, high = 3} from queue
+consumer removed {low = 4, high = 4} from queue
+consumer removed {low = 5, high = 5} from queue
+consumer removed {low = 6, high = 6} from queue
+consumer removed {low = 7, high = 7} from queue
+consumer removed {low = 8, high = 8} from queue
+consumer removed {low = 9, high = 9} from queue
+consumer removed {low = 10, high = 10} from queue
+producer added {low = 11, high = 11} to queue (idx=1)
+producer added {low = 12, high = 12} to queue (idx=2)
+producer added {low = 13, high = 13} to queue (idx=3)
+producer added {low = 14, high = 14} to queue (idx=4)
+producer added {low = 15, high = 15} to queue (idx=5)
+producer added {low = 16, high = 16} to queue (idx=6)
+producer added {low = 17, high = 17} to queue (idx=7)
+producer added {low = 18, high = 18} to queue (idx=8)
+producer added {low = 19, high = 19} to queue (idx=9)
+producer added {low = 20, high = 20} to queue (idx=0)
+consumer removed {low = 11, high = 11} from queue
+consumer removed {low = 12, high = 12} from queue
+producer added {low = 21, high = 21} to queue (idx=1)
+consumer removed {low = 13, high = 13} from queue
+producer added {low = 22, high = 22} to queue (idx=2)
+consumer removed {low = 14, high = 14} from queue
+producer added {low = 23, high = 23} to queue (idx=3)
+consumer removed {low = 15, high = 15} from queue
+producer added {low = 24, high = 24} to queue (idx=4)
+consumer removed {low = 16, high = 16} from queue
+producer added {low = 25, high = 25} to queue (idx=5)
+consumer removed {low = 17, high = 17} from queue
+producer added {low = 26, high = 26} to queue (idx=6)
+consumer removed {low = 18, high = 18} from queue
+producer added {low = 27, high = 27} to queue (idx=7)
+consumer removed {low = 19, high = 19} from queue
+producer added {low = 28, high = 28} to queue (idx=8)
+consumer removed {low = 20, high = 20} from queue
+producer added {low = 29, high = 29} to queue (idx=9)
+consumer removed {low = 21, high = 21} from queue
+producer added {low = 30, high = 30} to queue (idx=0)
+consumer removed {low = 22, high = 22} from queue
+producer added {low = 31, high = 31} to queue (idx=1)
+consumer removed {low = 23, high = 23} from queue
+producer added {low = 32, high = 32} to queue (idx=2)
+consumer removed {low = 24, high = 24} from queue
+producer added {low = 33, high = 33} to queue (idx=3)
+consumer removed {low = 25, high = 25} from queue
+producer added {low = 34, high = 34} to queue (idx=4)
+consumer removed {low = 26, high = 26} from queue
+producer added {low = 35, high = 35} to queue (idx=5)
+consumer removed {low = 27, high = 27} from queue
+producer added {low = 36, high = 36} to queue (idx=6)
+consumer removed {low = 28, high = 28} from queue
+producer added {low = 37, high = 37} to queue (idx=7)
+consumer removed {low = 29, high = 29} from queue
+producer added {low = 38, high = 38} to queue (idx=8)
+consumer removed {low = 30, high = 30} from queue
+producer added {low = 39, high = 39} to queue (idx=9)
+consumer removed {low = 31, high = 31} from queue
+producer added {low = 40, high = 40} to queue (idx=0)
+consumer removed {low = 32, high = 32} from queue
+producer added endFlag to queue (idx=1)
+consumer removed {low = 33, high = 33} from queue
+consumer removed {low = 34, high = 34} from queue
+consumer removed {low = 35, high = 35} from queue
+consumer removed {low = 36, high = 36} from queue
+consumer removed {low = 37, high = 37} from queue
+consumer removed {low = 38, high = 38} from queue
+consumer removed {low = 39, high = 39} from queue
+consumer removed {low = 40, high = 40} from queue
+consumer removed {low = 0, high = 0} from queue
+consumer got endFlag, total tasks = 41
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./prodcons1 -nl 4 --numTasks=40[K[K[K[K[K[K[K[K[K[K[Kbuffs[KSize=5
+producer added {low = 1, high = 1} to queue (idx=1)
+producer added {low = 2, high = 2} to queue (idx=2)
+producer added {low = 3, high = 3} to queue (idx=3)
+producer added {low = 4, high = 4} to queue (idx=4)
+producer added {low = 5, high = 5} to queue (idx=0)
+consumer removed {low = 1, high = 1} from queue
+consumer removed {low = 2, high = 2} from queue
+consumer removed {low = 3, high = 3} from queue
+consumer removed {low = 4, high = 4} from queue
+consumer removed {low = 5, high = 5} from queue
+producer added {low = 6, high = 6} to queue (idx=1)
+producer added {low = 7, high = 7} to queue (idx=2)
+producer added {low = 8, high = 8} to queue (idx=3)
+producer added {low = 9, high = 9} to queue (idx=4)
+producer added {low = 10, high = 10} to queue (idx=0)
+consumer removed {low = 6, high = 6} from queue
+consumer removed {low = 7, high = 7} from queue
+consumer removed {low = 8, high = 8} from queue
+consumer removed {low = 9, high = 9} from queue
+consumer removed {low = 10, high = 10} from queue
+producer added {low = 11, high = 11} to queue (idx=1)
+producer added {low = 12, high = 12} to queue (idx=2)
+producer added {low = 13, high = 13} to queue (idx=3)
+producer added {low = 14, high = 14} to queue (idx=4)
+producer added {low = 15, high = 15} to queue (idx=0)
+consumer removed {low = 11, high = 11} from queue
+consumer removed {low = 12, high = 12} from queue
+consumer removed {low = 13, high = 13} from queue
+consumer removed {low = 14, high = 14} from queue
+consumer removed {low = 15, high = 15} from queue
+producer added {low = 16, high = 16} to queue (idx=1)
+producer added {low = 17, high = 17} to queue (idx=2)
+consumer removed {low = 16, high = 16} from queue
+producer added {low = 18, high = 18} to queue (idx=3)
+consumer removed {low = 17, high = 17} from queue
+producer added {low = 19, high = 19} to queue (idx=4)
+consumer removed {low = 18, high = 18} from queue
+producer added {low = 20, high = 20} to queue (idx=0)
+consumer removed {low = 19, high = 19} from queue
+producer added endFlag to queue (idx=1)
+consumer removed {low = 20, high = 20} from queue
+consumer removed {low = 0, high = 0} from queue
+consumer got endFlag, total tasks = 21
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ exit
+exit
+
+Script done on Thu 23 Feb 2017 06:39:09 PM PST
