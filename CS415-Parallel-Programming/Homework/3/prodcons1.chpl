@@ -33,11 +33,11 @@ module main {
 
     while (true) {
       task = queueRemove();
-      count += 1;
-      writeln("consumer removed ", task, " from queue");
       if (task == endFlag) then break;
+      writeln("consumer removed ", task, " from queue");
+      count += 1;
     }
-    writeln("consumer got endFlag after completing ", count - 1, " tasks");
+    writeln("consumer got endFlag after completing ", count, " tasks");
   } 
 
   proc main() {

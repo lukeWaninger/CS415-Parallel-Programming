@@ -1,0 +1,29 @@
+Script started on Sun 26 Feb 2017 12:10:19 PM PST
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1
+WARNING: Using GASNet's udp-conduit, which exists for portability convenience.
+WARNING: Support was detected for native GASNet conduits: ibv
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+3584 (should be 3584)
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1 --N =16
+WARNING: Using GASNet's udp-conduit, which exists for portability convenience.
+WARNING: Support was detected for native GASNet conduits: ibv
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+61440 (should be 3584)
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1 --N==16[K[K32
+WARNING: Using GASNet's udp-conduit, which exists for portability convenience.
+WARNING: Support was detected for native GASNet conduits: ibv
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+1015808 (should be 3584)
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1 --N==32[K[K64
+WARNING: Using GASNet's udp-conduit, which exists for portability convenience.
+WARNING: Support was detected for native GASNet conduits: ibv
+WARNING: You should *really* use the high-performance native GASNet conduit
+WARNING: if communication performance is at all important in this program run.
+16515072 (should be 3584)
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ exit
+exit
+
+Script done on Sun 26 Feb 2017 12:10:50 PM PST
