@@ -30,7 +30,7 @@ module main {
       idx = queueAdd(endFlag); // add ending flags to gueue
     }
 
-    writeln("producer added endFlag to queue (idx=", idx, ")");
+    writeln("producer added ", numCons, " endFlag(s) to queue (idx=", idx, ")");
   }
 
   proc consumer() { 
@@ -39,11 +39,11 @@ module main {
 
     while (true) {
       task = queueRemove();
-      localCount += 1; // sets the new count and unlocks
-      writeln("consumer removed ", task, " from queue");
       if (task == endFlag) then break;
+      localCount += 1; 
+      writeln("consumer removed ", task, " from queue");
     }
-    writeln("consumer got endFlag, total tasks = ", localCount);
+    writeln("consumer received endFlag after completing ", localCount, " tasks");
     
     var gc = globalCount$; // grab the lock
     globalCount$ = gc + localCount; // update and unlock
@@ -52,7 +52,7 @@ module main {
   proc main() {
     sync {
       begin producer();
-      coforall i in 1..numCons do begin consumer();
+      forall i in 1..numCons do begin consumer();
     }
     writeln("total tasks completed = ", globalCount$.readXX());
   } 

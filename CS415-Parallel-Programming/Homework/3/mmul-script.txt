@@ -1,13 +1,13 @@
-Script started on Thu 23 Feb 2017 05:09:03 PM PST
-waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1
+Script started on Sun 26 Feb 2017 11:33:41 AM PST
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 4 [K
 3584 (should be 3584)
-waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1 --N=16
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 4 --N =16
 61440 (should be 3584)
-waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1 --N=16[K[K32
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 4 --N==16[K[K32
 1015808 (should be 3584)
-waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 1 --N=32[K[K64
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ ./mmul -nl 4 --N==32[K[K64
 16515072 (should be 3584)
-waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ exit
+waninger@ada:~/CS415/CS415-Parallel-Programming/Homework/3$ eixt[K[K[Kxit
 exit
 
-Script done on Thu 23 Feb 2017 05:09:46 PM PST
+Script done on Sun 26 Feb 2017 11:34:30 AM PST

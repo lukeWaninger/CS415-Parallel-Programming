@@ -13,7 +13,6 @@ module main {
 
   config const numTasks = 20;
   const endFlag = createTask();   // special "termination" task
-  var count$: sync int = 0;       // sync variable for counting completed tasks
 
   proc producer() { 
     var task: Task;
@@ -30,15 +29,15 @@ module main {
 
   proc consumer() { 
     var task: Task;
-    
+    var count: int = 0;
+
     while (true) {
-      var c = count$; // grabs the lock
       task = queueRemove();
-      count$ = c + 1; // sets the new count and unlocks
+      count += 1;
       writeln("consumer removed ", task, " from queue");
       if (task == endFlag) then break;
     }
-    writeln("consumer got endFlag, total tasks = ", count$.readXX());
+    writeln("consumer got endFlag after completing ", count - 1, " tasks");
   } 
 
   proc main() {
