@@ -36,12 +36,37 @@ int main(int argc, char*argv[]) {
 
     // check if P evenly divides N and P^2 <= N
     if (!N&P || P*P > N) {
-      printf("%d does not divide %d or %d^2 > %d. terminating\n", P, N, P, N);
+      printf("%d does not divide %d or %d^2>%d. terminating\n", P, N, P, N);
       exit(0);
     }
+
+    // allocate a buffer of size N/P
+    int* data = malloc(sizeof(int)*N/P);
+    
+    // open the input file to a specific view for each process
+    // what to do about p(0) who already has the file open....
+    MPI_File_open(MPI_COMM_WORLD, argv[1], MPI_MODE_RDONLY, MPI_INFO_NULL, &infile);
+    // set the file view for each process
+    MPI_Offset disp = p*sizeof(int);
+    MPI_File_set_view(infile, disp, MPI_INT, MPI_INT, "native", MPI_INFO_NULL);
+
+    // read the ints
+    // TODO: VERIFY READ BOUNDS ARE CORRECT AND NO INT IS 
+    // TODO: MISSED OR READ TWICE BY DIFFERENT THREADS
+    MPI_File_read(infile, &data, N/P, MPI_INT, &status);
+    MPI_File_close(&infile);
+    
+    // print the data assigned to each thread for verification
+    for (int i=0; i<sizeof(data)/sizeof(int); i++) {
+      printf("[p:%d] %d, ", p, data[i]);
+    }
+    printf("\n");
+    // every process sorts its data
+     
+
+    free(data);
   }
 
 
-  // every process allocates a buffer with size of N/P
   MPI_Finalize();
 }
