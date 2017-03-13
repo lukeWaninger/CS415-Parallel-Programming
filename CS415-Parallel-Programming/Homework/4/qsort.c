@@ -34,7 +34,7 @@ int *init_array(int N) {
   }
   srand(time(NULL));
   for (int i = 0; i < N; i++) {
-    int j = rand() % (n-1) + 1;
+    int j = rand() % (N-1) + 1;
     swap(array, i, j);
   }
   printf("Initialized array to a random permutation of [1..%d]\n", N);
@@ -95,7 +95,8 @@ void quicksort(int *array, int low, int high) {
 }
  
 // Main routine for testing quicksort
-// 
+//
+/*
 int main(int argc, char **argv) {
   int *array, N;
   
@@ -117,4 +118,4 @@ int main(int argc, char **argv) {
 
   verify_array(array, N);
 }
-
+*/
